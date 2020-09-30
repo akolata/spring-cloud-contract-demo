@@ -26,7 +26,7 @@ import pl.akolata.demo.loan.api.LoanController;
         },
         stubsMode = StubRunnerProperties.StubsMode.LOCAL
 )
-public class LoanControllerTest_LocalStubMode {
+public class LocalStubMode_LoanControllerTest {
 
     @Autowired
     private MockMvc mvc;
