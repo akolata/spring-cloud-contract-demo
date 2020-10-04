@@ -9,11 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.akolata.demo.fraud.api.CheckClientRequest;
 import pl.akolata.demo.fraud.api.CheckClientResponse;
+import pl.akolata.demo.fraud.service.ClientBrowserService;
+
+import java.util.Collection;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api")
 public class ClientController {
+    private final ClientBrowserService clientBrowserService;
 
     @PutMapping(
             value = "/client-check",
@@ -21,7 +25,8 @@ public class ClientController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<CheckClientResponse> checkClient(@RequestBody CheckClientRequest request) {
-        if ("CHROME".equals(request.getBrowser())) {
+        Collection<String> okBrowsers = clientBrowserService.getOkBrowsers();
+        if (okBrowsers.contains(request.getBrowser())) {
             return ResponseEntity.ok(new CheckClientResponse(CheckClientResponse.BrowserStatus.OK));
         } else {
             return ResponseEntity.ok(new CheckClientResponse(CheckClientResponse.BrowserStatus.NOT_OK));
