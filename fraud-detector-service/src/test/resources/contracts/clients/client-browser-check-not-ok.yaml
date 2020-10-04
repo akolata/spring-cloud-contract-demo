@@ -3,7 +3,8 @@ name: should check a browser and return not ok
 request:
   method: PUT
   url: /api/client-check
-  bodyFromFile: client-browser-check-request-not-ok.json
+  body:
+    browser: IE9
   headers:
     Content-Type: application/json
   matchers:

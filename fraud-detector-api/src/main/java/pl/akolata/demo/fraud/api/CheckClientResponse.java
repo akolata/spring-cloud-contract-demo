@@ -10,6 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CheckClientResponse implements Serializable {
+    private String browser;
     private BrowserStatus status;
 
     public enum BrowserStatus {

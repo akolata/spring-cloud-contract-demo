@@ -1,3 +1,4 @@
 {
+  "browser": "{{{ jsonpath this '$.browser' }}}",
   "status": "NOT_OK"
 }

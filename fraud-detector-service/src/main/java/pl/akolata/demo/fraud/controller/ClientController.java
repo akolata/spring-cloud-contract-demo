@@ -27,9 +27,9 @@ public class ClientController {
     public ResponseEntity<CheckClientResponse> checkClient(@RequestBody CheckClientRequest request) {
         Collection<String> okBrowsers = clientBrowserService.getOkBrowsers();
         if (okBrowsers.contains(request.getBrowser())) {
-            return ResponseEntity.ok(new CheckClientResponse(CheckClientResponse.BrowserStatus.OK));
+            return ResponseEntity.ok(new CheckClientResponse(request.getBrowser(), CheckClientResponse.BrowserStatus.OK));
         } else {
-            return ResponseEntity.ok(new CheckClientResponse(CheckClientResponse.BrowserStatus.NOT_OK));
+            return ResponseEntity.ok(new CheckClientResponse(request.getBrowser(), CheckClientResponse.BrowserStatus.NOT_OK));
         }
     }
 }
