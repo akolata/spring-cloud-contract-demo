@@ -29,11 +29,6 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>pl.akolata.demo</groupId>
-			<artifactId>fraud-detector-api</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -50,6 +45,11 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-contract-verifier</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>pl.akolata.demo</groupId>
+			<artifactId>fraud-detector-api</artifactId>
+			<version>1.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
@@ -74,7 +74,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<testFramework>JUNIT5</testFramework>
-					<baseClassForTests>pl.akolata.demo.fraud.BaseTestClass</baseClassForTests>
+					<packageWithBaseClasses>pl.akolata.demo.fraud.base</packageWithBaseClasses>
 				</configuration>
 			</plugin>
 			<plugin>

@@ -1,9 +1,11 @@
-package pl.akolata.demo.fraud.api;
+package pl.akolata.demo.fraud.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.akolata.demo.fraud.api.CheckFraudRequest;
+import pl.akolata.demo.fraud.api.CheckFraudResponse;
 
 import java.math.BigDecimal;
 

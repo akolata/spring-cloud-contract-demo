@@ -1,0 +1,18 @@
+description: Should check client's browser
+name: should check a browser
+request:
+  method: PUT
+  url: /api/client-check
+  bodyFromFile: client-browser-check-request.json
+  headers:
+    Content-Type: application/json
+  matchers:
+    body:
+      - path: $.['browser']
+        type: by_equality
+        value: "TEST_CHROME"
+response:
+  status: 200
+  bodyFromFile: client-browser-check-response.json
+  headers:
+    Content-Type: application/json
