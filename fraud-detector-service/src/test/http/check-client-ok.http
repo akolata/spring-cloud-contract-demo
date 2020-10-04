@@ -1,0 +1,7 @@
+PUT http://localhost:9000/api/client-check
+Content-Type: application/json
+
+{
+  "browser": "CHROME",
+  "checkRequestedAt": "2020-10-04T16:47:56+0200"
+}

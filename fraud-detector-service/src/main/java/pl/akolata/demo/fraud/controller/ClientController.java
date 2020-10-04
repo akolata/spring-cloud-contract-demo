@@ -11,6 +11,8 @@ import pl.akolata.demo.fraud.api.CheckClientRequest;
 import pl.akolata.demo.fraud.api.CheckClientResponse;
 import pl.akolata.demo.fraud.service.ClientBrowserService;
 
+import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 
 @RestController
@@ -26,10 +28,11 @@ public class ClientController {
     )
     public ResponseEntity<CheckClientResponse> checkClient(@RequestBody CheckClientRequest request) {
         Collection<String> okBrowsers = clientBrowserService.getOkBrowsers();
+        OffsetDateTime now = OffsetDateTime.now().truncatedTo(ChronoUnit.MICROS);
         if (okBrowsers.contains(request.getBrowser())) {
-            return ResponseEntity.ok(new CheckClientResponse(request.getBrowser(), CheckClientResponse.BrowserStatus.OK));
+            return ResponseEntity.ok(new CheckClientResponse(request.getBrowser(), CheckClientResponse.BrowserStatus.OK, now));
         } else {
-            return ResponseEntity.ok(new CheckClientResponse(request.getBrowser(), CheckClientResponse.BrowserStatus.NOT_OK));
+            return ResponseEntity.ok(new CheckClientResponse(request.getBrowser(), CheckClientResponse.BrowserStatus.NOT_OK, now));
         }
     }
 }

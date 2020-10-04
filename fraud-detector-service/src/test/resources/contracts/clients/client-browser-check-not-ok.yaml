@@ -15,5 +15,10 @@ request:
 response:
   status: 200
   bodyFromFile: client-browser-check-response-not-ok.json
+  matchers:
+    body:
+      - path: $.checkedAt
+        type: by_regex
+        predefined: iso_8601_with_offset
   headers:
     Content-Type: application/json

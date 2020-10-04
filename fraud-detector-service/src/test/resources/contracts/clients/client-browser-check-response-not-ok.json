@@ -1,4 +1,5 @@
 {
   "browser": "{{{ jsonpath this '$.browser' }}}",
-  "status": "NOT_OK"
+  "status": "NOT_OK",
+  "checkedAt": "2020-10-04T16:47:56+02:00"
 }
