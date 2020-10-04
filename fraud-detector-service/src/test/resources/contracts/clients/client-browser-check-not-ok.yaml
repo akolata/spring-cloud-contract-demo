@@ -1,18 +1,18 @@
 description: Should check client's browser
-name: should check a browser and return ok
+name: should check a browser and return not ok
 request:
   method: PUT
   url: /api/client-check
-  bodyFromFile: client-browser-check-request.json
+  bodyFromFile: client-browser-check-request-not-ok.json
   headers:
     Content-Type: application/json
   matchers:
     body:
       - path: $.['browser']
         type: by_equality
-        value: "TEST_CHROME"
+        value: "IE9"
 response:
   status: 200
-  bodyFromFile: client-browser-check-response.json
+  bodyFromFile: client-browser-check-response-not-ok.json
   headers:
     Content-Type: application/json
