@@ -18,22 +18,19 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import pl.akolata.demo.loan.api.LoanController;
-import pl.akolata.demo.loan.model.TakeLoanRequest;
-
-import java.math.BigDecimal;
+import pl.akolata.demo.loan.api.ClientController;
+import pl.akolata.demo.loan.model.CheckLoanClientRequest;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureStubRunner(
         ids = {
-                "pl.akolata.demo:fraud-detector-service:+:stubs" // Random port
-//                "pl.akolata.demo:fraud-detector-service:+:stubs:9000"
+                "pl.akolata.demo:fraud-detector-service:+:stubs"
         },
         stubsMode = StubRunnerProperties.StubsMode.LOCAL
 )
-public class LocalStubMode_LoanControllerTest {
+public class LocalStubMode_ClientControllerTest {
 
     @Autowired
     private MockMvc mvc;
@@ -42,29 +39,44 @@ public class LocalStubMode_LoanControllerTest {
     private ObjectMapper om;
 
     @Autowired
-    private LoanController loanController;
+    private ClientController clientController;
 
     @StubRunnerPort("fraud-detector-service")
     private Integer fraudDetectorStubPort;
 
     @BeforeEach
     void setup() {
-        this.loanController.setFraudDetectorServicePort(fraudDetectorStubPort);
+        this.clientController.setFraudDetectorServicePort(fraudDetectorStubPort);
     }
 
     @Test
     @SneakyThrows
-    void shouldBeRejectedDueToAbnormalLoanAmount() {
+    void shouldReturnCoolClient() {
         // given
-        TakeLoanRequest request = new TakeLoanRequest(BigDecimal.valueOf(99999));
+        CheckLoanClientRequest request = new CheckLoanClientRequest("TEST_CHROME");
 
         // expect
-        this.mvc.perform(MockMvcRequestBuilders.post("/api/loans")
+        this.mvc.perform(MockMvcRequestBuilders.post("/api/clients")
                 .content(om.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.result", Matchers.is("GET LOST")));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.result", Matchers.is("COOL CLIENT")));
+    }
+
+    @Test
+    @SneakyThrows
+    void shouldReturnFraudClient() {
+        // given
+        CheckLoanClientRequest request = new CheckLoanClientRequest("IE9");
+
+        // expect
+        this.mvc.perform(MockMvcRequestBuilders.post("/api/clients")
+                .content(om.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.result", Matchers.is("FRAUD CLIENT")));
     }
 
 }
