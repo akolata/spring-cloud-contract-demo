@@ -37,7 +37,7 @@ class LoanServiceContractTest {
     @Test
     void shouldBeRejectedDueToAbnormalLoanAmount() {
         // when
-        boolean canTake = loanService.canTakeLoan("123456789", BigDecimal.valueOf(99999));
+        boolean canTake = loanService.canTakeLoan("1234567890", BigDecimal.valueOf(99999));
 
         // then
         Assertions.assertFalse(canTake);
